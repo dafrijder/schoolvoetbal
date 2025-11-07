@@ -1,4 +1,4 @@
-<h1>Registreren</h1>
+<h1>Inloggen</h1>
 
 @if ($errors->any())
     <div style="color:red;">
@@ -10,20 +10,14 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('register') }}">
+<form method="POST" action="{{ route('login') }}">
     @csrf
-    <label>Naam:</label><br>
-    <input type="text" name="name" value="{{ old('name') }}" required><br><br>
-
     <label>E-mail:</label><br>
     <input type="email" name="email" value="{{ old('email') }}" required><br><br>
 
     <label>Wachtwoord:</label><br>
     <input type="password" name="password" required><br><br>
 
-    <label>Bevestig wachtwoord:</label><br>
-    <input type="password" name="password_confirmation" required><br><br>
-
-    <button type="submit">Registreer</button>
+    <button type="submit">Inloggen</button>
 </form>
-<p>Al een account? <a href="{{ route('login') }}">Inloggen</a></p>
+<p>Nog geen account? <a href="{{ route('register') }}">Registreren</a></p>
