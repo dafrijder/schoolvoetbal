@@ -21,7 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        '4S-dollars',
         'is_admin',
     ];
 
