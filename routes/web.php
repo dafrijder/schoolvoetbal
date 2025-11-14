@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 
 // Registratie
@@ -15,3 +16,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return "Welkom bij de app!";
 })->middleware('auth');
+
+// API Routes
+Route::get('/api/users', [ApiController::class, 'index']);
+Route::get('/api/users/{id}', [ApiController::class, 'show']);
