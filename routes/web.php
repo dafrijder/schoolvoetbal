@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware; // toegevoegd
@@ -19,20 +18,3 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return "Welkom bij de app!";
 })->middleware('auth');
-
-Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    // directe /admin naar dashboard
-    Route::get('/admin', function () {
-        return redirect('/admin/dashboard');
-    });
-
-    Route::get('/admin/dashboard', [AdminController::class, 'index']);
-    // voeg andere admin routes toe
-});
-
-Route::get('/whoami', function () {
-    return [
-        'check' => Auth::check(),
-        'user' => Auth::user() ? Auth::user()->only(['id','name','email','is_admin']) : null,
-    ];
-});
