@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware; // toegevoegd
+use Illuminate\Support\Facades\Auth;
 
 // Registratie
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
@@ -16,7 +18,3 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return "Welkom bij de app!";
 })->middleware('auth');
-
-// API Routes
-Route::get('/api/users', [ApiController::class, 'index']);
-Route::get('/api/users/{id}', [ApiController::class, 'show']);
