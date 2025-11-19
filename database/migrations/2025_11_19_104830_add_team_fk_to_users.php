@@ -9,13 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('4S-dollars')->default(50)->after('password');
-            $table->boolean('is_admin')->default(false)->after('4S-dollars');
-        });
-    }
+    public function up()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->foreign('team_id')
+              ->references('id')->on('teams')
+              ->onDelete('set null');
+    });
+}
+
 
     /**
      * Reverse the migrations.

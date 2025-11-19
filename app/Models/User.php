@@ -9,6 +9,26 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function createdTeams()
+    {
+        return $this->hasMany(Team::class, 'creator_id');
+    }
+
+    public function refereedGames()
+    {
+        return $this->hasMany(Game::class, 'referee_id');
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class, 'player_id');
+    }
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 

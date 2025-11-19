@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeamController;
 use App\Http\Middleware\AdminMiddleware; // toegevoegd
 use Illuminate\Support\Facades\Auth;
 
@@ -13,6 +14,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+//team routes
+Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 
 // Beveiligde pagina (alleen voor ingelogde gebruikers)
 Route::get('/home', function () {
