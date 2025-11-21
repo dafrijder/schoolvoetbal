@@ -21,4 +21,9 @@ Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 // Beveiligde pagina (alleen voor ingelogde gebruikers)
 Route::get('/home', function () {
     return "Welkom bij de app!";
-})->middleware('auth');
+})->middleware('auth')->name('home');
+
+Route::middleware('auth', 'admin')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    // Voeg hier meer admin-specifieke routes toe
+});
