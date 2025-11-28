@@ -17,8 +17,12 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-//team routes
+// team routes (index, show, edit, update, destroy)
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+Route::get('/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+Route::put('/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
+Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
 
 //api routes
 Route::get('/api/teams', [ApiController::class, 'getTeams'])->name('api.teams');
