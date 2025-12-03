@@ -15,7 +15,7 @@ return new class extends Migration
         $table->foreign('team_id')
               ->references('id')->on('teams')
               ->onDelete('set null');
-        $table->integer('4S-dollars')->default(50)->after('team_id');
+        $table->integer('four_s_dollars')->default(50)->after('team_id');
     });
 }
 
