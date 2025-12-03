@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -11,7 +12,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-
+         $teams = Team::all();
+        return view('teams.teams', compact('teams'));
     }
 
     /**
@@ -35,7 +37,8 @@ class TeamController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $team = Team::findOrFail($id);
+        return view('teams.show', compact('team'));
     }
 
     /**
@@ -43,7 +46,8 @@ class TeamController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $team = Team::findOrFail($id);
+        return view('teams.edit', compact('team'));
     }
 
     /**
@@ -51,7 +55,20 @@ class TeamController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $team = Team::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'points' => 'nullable|integer',
+        ]);
+
+        $team->name = $validated['name'];
+        if (array_key_exists('points', $validated)) {
+            $team->points = $validated['points'] ?? 0;
+        }
+        $team->save();
+
+        return redirect()->route('teams.index');
     }
 
     /**
@@ -59,6 +76,8 @@ class TeamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $team = Team::findOrFail($id);
+        $team->delete();
+        return redirect()->route('teams.index');
     }
 }
