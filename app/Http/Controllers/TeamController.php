@@ -13,7 +13,7 @@ class TeamController extends Controller
     public function index()
     {
          $teams = Team::all();
-        return view('teams.teams', compact('teams'));
+        return view('teams.index', compact('teams'));
     }
 
     /**
@@ -21,7 +21,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        //
+        return view('teams.create');
     }
 
     /**
@@ -29,7 +29,19 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'points' => 'nullable|integer',
+        ]);
+
+        $team = new Team();
+        $team->name = $validated['name'];
+        $team->points = $validated['points'] ?? 0;
+        // If you have authentication, use auth()->id(); otherwise leave creator_id null or set to 1
+        $team->creator_id = auth()->id() ?? 1;
+        $team->save();
+
+        return redirect()->route('teams.index');
     }
 
     /**
