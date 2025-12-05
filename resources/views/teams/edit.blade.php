@@ -14,13 +14,16 @@
 
     <div>
         <label for="name">Naam</label>
-        <input type="text" name="name" id="name" value="{{ old('name', $team->name) }}">
+        <input type="text" name="name" id="name" value="{{ old('name', $team->name) }}" required>
     </div>
 
     <div>
         <label for="points">Punten</label>
-        <input type="number" name="points" id="points" value="{{ old('points', $team->points) }}">
+        <input type="number" name="points" id="points" value="{{ old('points', $team->points) }}" min="0">
     </div>
+
+    {{-- preserve creator id in the form if present (not strictly required) --}}
+    <input type="hidden" name="creator_id" value="{{ old('creator_id', $team->creator_id ?? '') }}">
 
     <button type="submit">Opslaan</button>
     <a href="{{ route('teams.index') }}">Annuleer</a>
