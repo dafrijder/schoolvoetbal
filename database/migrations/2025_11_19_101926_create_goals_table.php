@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('game_id')->nullable();
+            $table->unsignedBigInteger('player_id')->nullable();
+            $table->integer('minute')->nullable();
             $table->timestamps();
+
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('player_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

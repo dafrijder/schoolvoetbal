@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('team1_id');
-            $table->unsignedBigInteger('team2_id');
-            $table->integer('team1_score')->nullable();
-            $table->integer('team2_score')->nullable();
-            $table->string('field');
-            $table->unsignedBigInteger('referee_id');
-            $table->string('time');
+            $table->unsignedBigInteger('home_team_id')->nullable();
+            $table->unsignedBigInteger('away_team_id')->nullable();
+            $table->string('score')->nullable();
+            $table->unsignedBigInteger('referee_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('team1_id')->references('id')->on('teams')->onDelete('cascade');
-            $table->foreign('team2_id')->references('id')->on('teams')->onDelete('cascade');
-            $table->foreign('referee_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('home_team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('away_team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('referee_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matches');
+        Schema::dropIfExists('games');
     }
 };
