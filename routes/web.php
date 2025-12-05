@@ -17,8 +17,10 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// team routes (index, show, edit, update, destroy)
+// team routes (index, create, store, show, edit, update, destroy)
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
+Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
 Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::get('/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
 Route::put('/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
