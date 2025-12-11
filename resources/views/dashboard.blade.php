@@ -1,43 +1,82 @@
-<div>
-    <h1>Dashboard</h1>
-    <p>Welkom op uw dashboard!</p>
+<x-base-layout>
+    <div class="p-8 bg-gray-100 min-h-screen">
 
-    <h2>Statistieken</h2>
-    <ul>
-        <li>Teams: {{ $teams->count() }}</li>
-        <li>Games: {{ $games->count() }}</li>
-        <li>Goals: {{ $goals->count() }}</li>
-    </ul>
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">Dashboard</h1>
+            <p class="text-gray-600 mt-2">Welkom op uw dashboard!</p>
+        </div>
 
-    <h3>Teams</h3>
-    <ul>
-        @foreach($teams as $team)
-            <li>{{ $team->name ?? 'Onbekend team' }}</li>
-        @endforeach
-    </ul>
+        <!-- Statistieken -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Statistieken</h2>
 
-    <h3>Games</h3>
-    <ul>
-        @foreach($games as $game)
-            <li>
-                {{ $game->id }}
-                —
-                {{ $game->home_team_name ?? ($game->homeTeam->name ?? 'Thuis') }}
-                vs
-                {{ $game->away_team_name ?? ($game->awayTeam->name ?? 'Uit') }}
-                {{ isset($game->score) ? " (score: {$game->score})" : '' }}
-            </li>
-        @endforeach
-    </ul>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
-    <h3>Goals</h3>
-    <ul>
-        @foreach($goals as $goal)
-            <li>
-                {{ $goal->id }} —
-                {{ $goal->player_name ?? ($goal->player->name ?? 'Speler') }}
-                {{ isset($goal->minute) ? " (min: {$goal->minute})" : '' }}
-            </li>
-        @endforeach
-    </ul>
-</div>
+            <div class="bg-white shadow rounded-xl p-6">
+                <p class="text-sm text-gray-500">Teams</p>
+                <p class="text-3xl font-bold text-blue-600">{{ $teams->count() }}</p>
+            </div>
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <p class="text-sm text-gray-500">Games</p>
+                <p class="text-3xl font-bold text-green-600">{{ $games->count() }}</p>
+            </div>
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <p class="text-sm text-gray-500">Goals</p>
+                <p class="text-3xl font-bold text-red-600">{{ $goals->count() }}</p>
+            </div>
+        </div>
+
+        <!-- Teams -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Teams</h3>
+        <div class="bg-white shadow rounded-xl p-5 mb-10">
+            <ul class="space-y-2">
+                @foreach ($teams as $team)
+                    <li class="p-3 bg-gray-50 rounded border border-gray-200">
+                        {{ $team->name ?? 'Onbekend team' }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- Games -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Games</h3>
+        <div class="bg-white shadow rounded-xl p-5 mb-10">
+            <ul class="space-y-3">
+                @foreach ($games as $game)
+                    <li class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <span class="font-semibold text-gray-700">Game #{{ $game->id }}</span>
+                        —
+                        {{ $game->home_team_name ?? ($game->homeTeam->name ?? 'Thuis') }}
+                        <span class="font-medium text-gray-800">vs</span>
+                        {{ $game->away_team_name ?? ($game->awayTeam->name ?? 'Uit') }}
+                        @if (isset($game->score))
+                            <span class="text-blue-600 font-semibold">(score: {{ $game->score }})</span>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- Goals -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Goals</h3>
+        <div class="bg-white shadow rounded-xl p-5">
+            <ul class="space-y-3">
+                @foreach ($goals as $goal)
+                    <li class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <span class="font-semibold text-gray-700">Goal #{{ $goal->id }}</span>
+                        —
+                        {{ $goal->player_name ?? ($goal->player->name ?? 'Speler') }}
+                        @if (isset($goal->minute))
+                            <span class="text-green-600 font-medium">(min: {{ $goal->minute }})</span>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+    </div>
+
+
+</x-base-layout>

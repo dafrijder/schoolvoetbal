@@ -37,8 +37,7 @@ class TeamController extends Controller
         $team = new Team();
         $team->name = $validated['name'];
         $team->points = $validated['points'] ?? 0;
-        // If you have authentication, use auth()->id(); otherwise leave creator_id null or set to 1
-        $team->creator_id = auth()->id() ?? 1;
+        $team->creator_id = auth()->id();
         $team->save();
 
         return redirect()->route('teams.index');
@@ -59,6 +58,11 @@ class TeamController extends Controller
     public function edit(string $id)
     {
         $team = Team::findOrFail($id);
+
+        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403, 'Je bent niet gemachtigd dit team aan te passen.');
+        }
+
         return view('teams.edit', compact('team'));
     }
 
@@ -68,6 +72,10 @@ class TeamController extends Controller
     public function update(Request $request, string $id)
     {
         $team = Team::findOrFail($id);
+
+        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403, 'Je bent niet gemachtigd dit team aan te passen.');
+        }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -89,6 +97,11 @@ class TeamController extends Controller
     public function destroy(string $id)
     {
         $team = Team::findOrFail($id);
+
+        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403, 'Je bent niet gemachtigd dit team te verwijderen.');
+        }
+
         $team->delete();
         return redirect()->route('teams.index');
     }

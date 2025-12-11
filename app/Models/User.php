@@ -29,6 +29,14 @@ class User extends Authenticatable
         return $this->hasMany(Goal::class, 'player_id');
     }
 
+    /**
+     * Check if user is an admin.
+     */
+    public function isAdmin()
+    {
+        return (bool) $this->is_admin;
+    }
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
