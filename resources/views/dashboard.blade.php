@@ -44,39 +44,23 @@
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Games</h3>
         <div class="bg-white shadow rounded-xl p-5 mb-10">
             <ul class="space-y-3">
-                @foreach ($games as $game)
+                {{-- laat de eerste 10 zien --}}
+                @for ($i = 0; $i < min(10, $games->count()); $i++)
+                    @php
+                        $game = $games[$i];
+                    @endphp
                     <li class="p-3 bg-gray-50 rounded border border-gray-200">
                         <span class="font-semibold text-gray-700">Game #{{ $game->id }}</span>
                         —
-                        {{ $game->home_team_name ?? ($game->homeTeam->name ?? 'Thuis') }}
+                        {{ $teams->find($game->home_team_id)->name ?? $game->home_team_id }}
                         <span class="font-medium text-gray-800">vs</span>
-                        {{ $game->away_team_name ?? ($game->awayTeam->name ?? 'Uit') }}
+                        {{ $teams->find($game->away_team_id)->name ?? $game->away_team_id }}
                         @if (isset($game->score))
                             <span class="text-blue-600 font-semibold">(score: {{ $game->score }})</span>
                         @endif
                     </li>
-                @endforeach
+                @endfor
             </ul>
         </div>
-
-        <!-- Goals -->
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Goals</h3>
-        <div class="bg-white shadow rounded-xl p-5">
-            <ul class="space-y-3">
-                @foreach ($goals as $goal)
-                    <li class="p-3 bg-gray-50 rounded border border-gray-200">
-                        <span class="font-semibold text-gray-700">Goal #{{ $goal->id }}</span>
-                        —
-                        {{ $goal->player_name ?? ($goal->player->name ?? 'Speler') }}
-                        @if (isset($goal->minute))
-                            <span class="text-green-600 font-medium">(min: {{ $goal->minute }})</span>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-
     </div>
-
-
 </x-base-layout>

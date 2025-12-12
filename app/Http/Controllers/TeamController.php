@@ -37,7 +37,8 @@ class TeamController extends Controller
         $team = new Team();
         $team->name = $validated['name'];
         $team->points = $validated['points'] ?? 0;
-        $team->creator_id = auth()->id();
+        // If you have authentication, use auth()->id(); otherwise leave creator_id null or set to 1
+        $team->creator_id = auth()->id() ?? 1;
         $team->save();
 
         return redirect()->route('teams.index');
@@ -58,9 +59,9 @@ class TeamController extends Controller
     public function edit(string $id)
     {
         $team = Team::findOrFail($id);
-
-        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
-            abort(403, 'Je bent niet gemachtigd dit team aan te passen.');
+        $user = auth()->user();
+        if (! $user || ($team->creator_id !== $user->id && ! ($user->is_admin ?? false))) {
+            abort(403, 'Toegang geweigerd');
         }
 
         return view('teams.edit', compact('team'));
@@ -73,8 +74,9 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 
-        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
-            abort(403, 'Je bent niet gemachtigd dit team aan te passen.');
+        $user = auth()->user();
+        if (! $user || ($team->creator_id !== $user->id && ! ($user->is_admin ?? false))) {
+            abort(403, 'Toegang geweigerd');
         }
 
         $validated = $request->validate([
@@ -97,9 +99,9 @@ class TeamController extends Controller
     public function destroy(string $id)
     {
         $team = Team::findOrFail($id);
-
-        if ($team->creator_id !== auth()->id() && !auth()->user()->isAdmin()) {
-            abort(403, 'Je bent niet gemachtigd dit team te verwijderen.');
+        $user = auth()->user();
+        if (! $user || ($team->creator_id !== $user->id && ! ($user->is_admin ?? false))) {
+            abort(403, 'Toegang geweigerd');
         }
 
         $team->delete();
