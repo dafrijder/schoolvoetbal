@@ -10,7 +10,7 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::check() || ! Auth::user()->isAdmin()) {
+        if (! Auth::user()->is_admin) {
             abort(403, 'Toegang geweigerd');
         }
         return $next($request);
