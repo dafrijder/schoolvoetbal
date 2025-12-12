@@ -27,6 +27,9 @@ Route::get('/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.e
 Route::put('/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
 Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
 
+// games resource routes
+Route::resource('games', App\Http\Controllers\GameController::class);
+
 //api routes
 Route::get('/api/teams', [ApiController::class, 'getTeams'])->name('api.teams');
 Route::get('/api/users', [ApiController::class, 'getUsers'])->name('api.users');
