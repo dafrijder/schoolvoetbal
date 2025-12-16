@@ -7,18 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     protected $fillable = [
-        'team1_id', 'team2_id', 'team1_score', 'team2_score',
+        'home_team_id', 'away_team_id', 'score',
+        // 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score',
         'field', 'referee_id', 'time'
     ];
 
     public function team1()
     {
-        return $this->belongsTo(Team::class, 'team1_id');
+        return $this->belongsTo(Team::class, 'home_team_id');
     }
 
     public function team2()
     {
-        return $this->belongsTo(Team::class, 'team2_id');
+        return $this->belongsTo(Team::class, 'away_team_id');
     }
 
     public function referee()
