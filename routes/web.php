@@ -36,6 +36,11 @@ Route::get('/api/teams', [ApiController::class, 'getTeams'])->name('api.teams');
 Route::get('/api/users', [ApiController::class, 'getUsers'])->name('api.users');
 Route::get('/api/games', [ApiController::class, 'getGames'])->name('api.games');
 
+//ticket 702 endpoints
+Route::get('/api/matches', [ApiController::class, 'matches'])->name('api.matches');
+Route::get('/api/results', [ApiController::class, 'results'])->name('api.results');
+Route::get('/api/goals', [ApiController::class, 'goals'])->name('api.goals');
+
 // Beveiligde pagina (alleen voor ingelogde gebruikers)
 Route::get('/home', [DashboardController::class, 'index'])
     ->middleware('auth')
