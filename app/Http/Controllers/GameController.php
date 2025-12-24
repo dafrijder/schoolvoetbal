@@ -30,9 +30,10 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'home_team_id' => 'required|exists:teams,id',
-            'away_team_id' => 'required|exists:teams,id|different:home_team_id',
-            'score' => 'nullable|string',
+            'team1_id' => 'required|exists:teams,id',
+            'team2_id' => 'required|exists:teams,id|different:team1_id',
+            'team1_score' => 'nullable|string',
+            'team2_score' => 'nullable|string',
             'field' => 'required|string|max:255',
             'referee_id' => 'required|exists:users,id',
             'time' => 'required|date',
