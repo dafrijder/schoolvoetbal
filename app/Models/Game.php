@@ -9,17 +9,18 @@ class Game extends Model
     protected $fillable = [
         'home_team_id', 'away_team_id', 'score',
         // 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score',
+        'team1_id', 'team2_id', 'team1_score', 'team2_score',
         'field', 'referee_id', 'time'
     ];
 
     public function team1()
     {
-        return $this->belongsTo(Team::class, 'home_team_id');
+        return $this->belongsTo(Team::class, 'team1_id');
     }
 
     public function team2()
     {
-        return $this->belongsTo(Team::class, 'away_team_id');
+        return $this->belongsTo(Team::class, 'team2_id');
     }
 
     public function referee()
