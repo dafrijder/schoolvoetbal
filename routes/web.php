@@ -46,7 +46,7 @@ Route::get('/home', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('home');
 
-Route::middleware('auth', 'admin')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     // Voeg hier meer admin-specifieke routes toe
 });
