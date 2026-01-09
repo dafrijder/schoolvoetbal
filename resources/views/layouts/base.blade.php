@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-
+        <x-navbar />
     </header>
     <main>
         {{ $slot }}

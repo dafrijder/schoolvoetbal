@@ -26,12 +26,20 @@ class GamesSeeder extends Seeder
                 $away = $faker->randomElement($teams);
             } while ($away === $home);
 
-            Game::create([
-                'home_team_id' => $home,
-                'away_team_id' => $away,
-                'score' => $faker->boolean(70) ? $faker->numberBetween(0, 5) . '-' . $faker->numberBetween(0, 5) : null,
+            $team1Score = null;
+            $team2Score = null;
+            if ($faker->boolean(70)) {
+                $team1Score = $faker->numberBetween(0, 5);
+                $team2Score = $faker->numberBetween(0, 5);
+            }
+
+            Game::create(array_filter([
+                'team1_id' => $home,
+                'team2_id' => $away,
+                'team1_score' => $team1Score,
+                'team2_score' => $team2Score,
                 'referee_id' => $faker->randomElement($referees),
-            ]);
+            ], function ($v) { return !is_null($v); }));
         }
     }
 }

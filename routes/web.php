@@ -9,6 +9,7 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [AuthController::class, 'login']);
 // Registratie
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,12 +36,17 @@ Route::get('/api/teams', [ApiController::class, 'getTeams'])->name('api.teams');
 Route::get('/api/users', [ApiController::class, 'getUsers'])->name('api.users');
 Route::get('/api/games', [ApiController::class, 'getGames'])->name('api.games');
 
+//ticket 702 endpoints / ticket 502
+Route::get('/api/matches', [ApiController::class, 'matches'])->name('api.matches');
+Route::get('/api/results', [ApiController::class, 'results'])->name('api.results');
+Route::get('/api/goals', [ApiController::class, 'goals'])->name('api.goals');
+
 // Beveiligde pagina (alleen voor ingelogde gebruikers)
 Route::get('/home', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('home');
 
-Route::middleware('auth', 'admin')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     // Voeg hier meer admin-specifieke routes toe
 });

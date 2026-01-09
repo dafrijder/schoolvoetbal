@@ -1,3 +1,4 @@
+<x-base-layout>
 <h1>Nieuw game aanmaken</h1>
 
 @if ($errors->any())
@@ -49,3 +50,4 @@
     <button type="submit">Aanmaken</button>
     <a href="{{ route('games.index') }}">Annuleren</a>
 </form>
+</x-base-layout>

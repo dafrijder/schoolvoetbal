@@ -2,10 +2,10 @@
     <div class="p-8 bg-gray-100 min-h-screen">
 
         <!-- Header -->
-        <div class="mb-8">
+        {{-- <div class="mb-8">
             <h1 class="text-4xl font-bold text-gray-800">Dashboard</h1>
             <p class="text-gray-600 mt-2">Welkom op uw dashboard!</p>
-        </div>
+        </div> --}}
 
         <!-- Statistieken -->
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Statistieken</h2>
@@ -52,12 +52,12 @@
                     <li class="p-3 bg-gray-50 rounded border border-gray-200">
                         <span class="font-semibold text-gray-700">Game #{{ $game->id }}</span>
                         —
-                        {{ $teams->find($game->home_team_id)->name ?? $game->home_team_id }}
+                        {{ $teams->find($game->team1_id)->name ?? $game->team1_id }}
                         <span class="font-medium text-gray-800">vs</span>
-                        {{ $teams->find($game->away_team_id)->name ?? $game->away_team_id }}
-                        @if (isset($game->score))
-                            <span class="text-blue-600 font-semibold">(score: {{ $game->score }})</span>
-                        @endif
+                        {{ $teams->find($game->team2_id)->name ?? $game->team2_id }}
+                        {{-- @if (isset($game->score)) --}}
+                            <span class="text-blue-600 font-semibold">(score: {{ $game->team1_score ?? 0 }} - {{ $game->team2_score ?? 0 }})</span>
+                        {{-- @endif --}}
                     </li>
                 @endfor
             </ul>
