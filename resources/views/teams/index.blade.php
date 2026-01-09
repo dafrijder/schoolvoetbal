@@ -13,6 +13,7 @@
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Punten</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Naam</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Acties</th>
                         </tr>
@@ -25,6 +26,10 @@
 
                                 <td class="px-6 py-4 text-gray-700">
                                     {{ $loop->iteration }}
+                                </td>
+
+                                <td class="px-6 py-4 text-gray-900 font-semibold">
+                                    {{ $team->points ?? 0 }}
                                 </td>
 
                                 <td class="px-6 py-4 text-blue-600 font-medium">
