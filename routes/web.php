@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GameController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,5 +49,7 @@ Route::get('/home', [DashboardController::class, 'index'])
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/schedule/generate', [AdminController::class, 'generateSchedule'])->name('admin.schedule.generate');
+    Route::post('/admin/schedule/reset', [AdminController::class, 'resetSchedule'])->name('admin.schedule.reset');
     // Voeg hier meer admin-specifieke routes toe
 });
