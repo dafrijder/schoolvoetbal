@@ -43,24 +43,38 @@
         <!-- Games -->
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Games</h3>
         <div class="bg-white shadow rounded-xl p-5 mb-10">
-            <ul class="space-y-3">
-                {{-- laat de eerste 10 zien --}}
-                @for ($i = 0; $i < min(10, $games->count()); $i++)
-                    @php
-                        $game = $games[$i];
-                    @endphp
-                    <li class="p-3 bg-gray-50 rounded border border-gray-200">
-                        <span class="font-semibold text-gray-700">Game #{{ $game->id }}</span>
-                        —
-                        {{ $teams->find($game->team1_id)->name ?? $game->team1_id }}
-                        <span class="font-medium text-gray-800">vs</span>
-                        {{ $teams->find($game->team2_id)->name ?? $game->team2_id }}
-                        {{-- @if (isset($game->score)) --}}
-                            <span class="text-blue-600 font-semibold">(score: {{ $game->team1_score ?? 0 }} - {{ $game->team2_score ?? 0 }})</span>
-                        {{-- @endif --}}
-                    </li>
-                @endfor
-            </ul>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Datum</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Teams</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Veld</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @forelse ($games as $game)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700">
+                                    {{ $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d H:i') : '-' }}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900">
+                                    {{ optional($game->team1)->name ?? ($game->team1_id ?? '-') }}
+                                    &nbsp;vs&nbsp;
+                                    {{ optional($game->team2)->name ?? ($game->team2_id ?? '-') }}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-700">
+                                    {{ $game->field ?? '-' }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="px-6 py-4 text-center text-gray-600">Geen wedstrijden gevonden.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-base-layout>
