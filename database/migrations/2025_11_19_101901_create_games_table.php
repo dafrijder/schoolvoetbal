@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('team2_score')->default(0);
             $table->string('field')->nullable();
             $table->unsignedBigInteger('referee_id')->nullable();
-            $table->dateTime('time')->nullable();
+            $table->date('time')->nullable();
             $table->timestamps();
 
             $table->foreign('team1_id')->references('id')->on('teams')->onDelete('cascade');

@@ -44,7 +44,7 @@
 
     <div>
         <label for="time">Tijd</label>
-        <input type="datetime-local" id="time" name="time" value="{{ old('time', $game->time) }}">
+        <input type="datetime-local" id="time" name="time" value="{{ old('time', $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d\TH:i') : '') }}">
     </div>
 
     <button type="submit">Opslaan</button>

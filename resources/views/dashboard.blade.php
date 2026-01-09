@@ -56,7 +56,7 @@
                         @forelse ($games as $game)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 text-sm text-gray-700">
-                                    {{ $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d H:i') : '-' }}
+                                    {{ $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d') : '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-900">
                                     {{ optional($game->team1)->name ?? ($game->team1_id ?? '-') }}

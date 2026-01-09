@@ -34,9 +34,9 @@
 
                                 <td class="px-6 py-4 text-gray-900">{{ optional($game->team2)->name ?? '—' }}</td>
 
-                                <td class="px-6 py-4 text-gray-700">{{ $game->home_team_score ?? 0 }} - {{ $game->away_team_score ?? 0 }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $game->team1_score ?? 0 }} - {{ $game->team2_score ?? 0 }}</td>
 
-                                <td class="px-6 py-4 text-gray-700">{{ $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d H:i') : '-' }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $game->time ? \Carbon\Carbon::parse($game->time)->format('Y-m-d') : '-' }}</td>
 
                                 <td class="px-6 py-4 flex items-center gap-3">
 
