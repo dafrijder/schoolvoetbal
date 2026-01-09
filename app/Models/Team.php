@@ -27,5 +27,26 @@ class Team extends Model
     {
         return $this->hasMany(Game::class, 'team2_id');
     }
+
+    public static function recalculatePoints(): void
+    {
+        // reset all points
+        static::query()->update(['points' => 0]);
+
+        $games = Game::whereNotNull('team1_score')
+            ->whereNotNull('team2_score')
+            ->get();
+
+        foreach ($games as $game) {
+            if ($game->team1_score > $game->team2_score) {
+                static::where('id', $game->team1_id)->increment('points', 3);
+            } elseif ($game->team1_score < $game->team2_score) {
+                static::where('id', $game->team2_id)->increment('points', 3);
+            } else {
+                static::where('id', $game->team1_id)->increment('points', 1);
+                static::where('id', $game->team2_id)->increment('points', 1);
+            }
+        }
+    }
 }
 

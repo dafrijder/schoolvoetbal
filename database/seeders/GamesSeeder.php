@@ -41,5 +41,8 @@ class GamesSeeder extends Seeder
                 'referee_id' => $faker->randomElement($referees),
             ], function ($v) { return !is_null($v); }));
         }
+
+        // After seeding games, calculate and store points for all teams
+        Team::recalculatePoints();
     }
 }

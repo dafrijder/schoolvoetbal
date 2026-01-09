@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Game;
+use App\Models\Team;
 
 class GameController extends Controller
 {
@@ -40,6 +41,10 @@ class GameController extends Controller
         ]);
 
         Game::create($request->all());
+
+        // Recalculate team points when a result is submitted
+        Team::recalculatePoints();
+
         return redirect()
             ->route('games.index');
     }
@@ -70,6 +75,9 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
 
         $game->update($request->all());
+        // Recalculate points after editing a game/result
+        Team::recalculatePoints();
+
         return redirect()->route('games.index');
     }
 
@@ -80,6 +88,9 @@ class GameController extends Controller
     {
         $game = Game::findOrFail($id);
         $game->delete();
+
+        // Recalculate points after deleting a game
+        Team::recalculatePoints();
 
         return redirect()->route('games.index');
     }
